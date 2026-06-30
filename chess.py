@@ -1,6 +1,5 @@
 
 BOARD_X_CHARACTERS = ['A','B','C', 'D', 'E', 'F', 'G', 'H']
-
 BOARD_LENGTH = 8
 
 def create_coordinates_string(x, y) -> str:
@@ -14,8 +13,13 @@ def transform_coordinates_to_chess_coordinates(up_positions: list[tuple[int, int
 
 
 def _calculate_up_positions(position: tuple[int, int]) -> list[str]:
-    positions = None
+    """ 
+        Calculate the four potental positions for a knight to move up the board.
+        Input: (x, y) where x is the index of the column and y is the index of the row
+        Output: [(x, y), (x, y), (x, y), (x, y)]
+    """
 
+    positions = None
     x, y = position
 
     if y == 0:
@@ -31,8 +35,12 @@ def _calculate_up_positions(position: tuple[int, int]) -> list[str]:
     return [position for position in positions if position]
 
 def _calculate_down_positions(position: tuple[int, int]) -> list[str]:
+    """ 
+        Calculate the four potental positions for a knight to move down the board.
+        Input: (x, y) where x is the index of the column and y is the index of the row
+        Output: [(x, y), (x, y), (x, y), (x, y)]
+    """
     positions = None
-
     x, y = position
 
     if y == 7:
@@ -40,9 +48,9 @@ def _calculate_down_positions(position: tuple[int, int]) -> list[str]:
     
     positions = [
         (x - 2, y + 1) if x > 1 else None, # two to the left, one down
-        (x - 1, y + 2) if x >= 1 and y <= 5 else None, # one to the left, two up
-        (x + 1, y + 2) if x <= 6 and y <= 5 else None, # one to the right, two up
-        (x + 2, y + 1) if x <= 5 and y <= 6 else None # two to the right, one up
+        (x - 1, y + 2) if x >= 1 and y <= 5 else None, # one to the left, two down
+        (x + 1, y + 2) if x <= 6 and y <= 5 else None, # one to the right, two down
+        (x + 2, y + 1) if x <= 5 and y <= 6 else None # two to the right, one down
     ]
 
     return [position for position in positions if position]
@@ -57,7 +65,7 @@ def get_knight_position(board_position: str) -> list[str]:
 
     if not board_position:
         raise ValueError("A board position is required")
-    
+
     if len(board_position) != 2:
         raise ValueError("The board position must be of length 2")
 
@@ -65,7 +73,7 @@ def get_knight_position(board_position: str) -> list[str]:
 
     if x not in BOARD_X_CHARACTERS:
         raise ValueError("X position must be between A-G")
-    
+
     y_number_value = int(y)
 
     if y_number_value < 1 or y_number_value > BOARD_LENGTH:
@@ -86,3 +94,5 @@ def get_knight_position(board_position: str) -> list[str]:
 # Sample Input: 'E4'
 if __name__ == "__main__":
     print(get_knight_position("D4"))  # ['B4', 'C3', 'E3', 'F4', 'B6', 'C7', 'E7', 'F6']
+    print(get_knight_position("A1"))  # ['B3', 'C2']
+    print(get_knight_position("H8"))  # ['F7', 'G6']
