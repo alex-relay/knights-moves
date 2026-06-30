@@ -3,9 +3,22 @@ BOARD_X_CHARACTERS = ['A','B','C', 'D', 'E', 'F', 'G', 'H']
 BOARD_LENGTH = 8
 
 def create_coordinates_string(x, y) -> str:
+    """
+        Create a string representation of the chess coordinates
+        Input: (x, y) where x is the index of the column and y is the index of the row
+        Output: "A1"
+    """
     return f"{BOARD_X_CHARACTERS[x]}{y}"
 
-def transform_coordinates_to_chess_coordinates(up_positions: list[tuple[int, int]], down_positions: list[tuple[int, int]]):
+def transform_coordinates_to_chess_coordinates(
+        up_positions: list[tuple[int, int]], 
+        down_positions: list[tuple[int, int]]
+    ) -> list[str]:
+    """
+        Transform the coordinates from (x, y) to chess coordinates (A1, B2, etc)
+        Input: [(x, y), (x, y), (x, y), (x, y)]
+        Output: ["A1", "B2", "C3", "D4"]
+    """
     up_coords = [create_coordinates_string(position[0], BOARD_LENGTH - position[1]) for position in up_positions]
     down_coords = [create_coordinates_string(position[0], BOARD_LENGTH - position[1]) for position in down_positions]
 
